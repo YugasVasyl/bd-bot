@@ -14,12 +14,7 @@ client.on('ready', () => {
 });
 
 client.on('message', message => {
-  console.log('message', JSON.stringify(message));
-  if (!message.content.indexOf('!bdbot')) {
-    processMessage.process(message);
-    message.reply('pong');
-    console.log('pong');
-  }
+  processMessage.process(message);
 });
 
 client.login(process.env.DISCORD_TOKEN);
