@@ -75,6 +75,7 @@ const processMessage = {
       username: message.author.username,
       server_ids: [message.channel.guild.id]
     };
+
     let numbers = message.content.match(/\d+/g);
     numbers = processMessage.formatNumbers(numbers);
     let error = processMessage.validateNumbers(numbers);
