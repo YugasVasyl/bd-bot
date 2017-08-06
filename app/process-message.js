@@ -1,3 +1,7 @@
+import db from './db';
+
+db.connect();
+
 const processMessage = {
   formatNumbers: (numbers) => {
     if (numbers) {
