@@ -1,7 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import Discord from 'discord.js';
-import processMessage from 'process-message';
+import processMessage from './process-message';
 
 console.log(processMessage);
 
