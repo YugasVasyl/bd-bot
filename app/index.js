@@ -14,7 +14,7 @@ const client = new Discord.Client();
 const CronJob = cron.CronJob;
 
 const bdReminder = new cron.CronJob({
-  cronTime: '00 * * * * *',
+  cronTime: '00 00 10 * * *',
   onTick: birthday.cronTick,
   start: false,
   timeZone: 'Europe/Kiev'
