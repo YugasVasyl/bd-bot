@@ -27,7 +27,7 @@ const mongoDB = {
       let collection = mongoDB._db.collection('users');
       collection.findOne({user_id: userId}, function(err, result) {
         if (err) {
-          console.error(`Error finding user: ${id}, ${err}`);
+          console.error(`Error finding user: ${userId}, ${err}`);
           mongoDB._db.close();
           rej(err);
         } else {
@@ -64,6 +64,22 @@ const mongoDB = {
           }
         });
       }
+    });
+  },
+
+  getBirthdays: (search) => {
+    return new Promise((res, rej) => {
+      let collection = mongoDB._db.collection('users');
+      collection.find({date: {$eq: search}}).toArray((err, result) => {
+        if (err) {
+          console.error(`Error finding user: ${search}, ${err}`);
+          mongoDB._db.close();
+          rej(err);
+        } else {
+          console.log('find user:', result);
+          res(result);
+        }
+      });
     });
   }
 };

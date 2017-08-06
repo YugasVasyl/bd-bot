@@ -24,17 +24,17 @@ const processMessage = {
     if (numbers) {
       if (numbers.length >= 2) {
         if (+numbers[0] <= 0 || +numbers[0] > 31) {
-          return 'Введена дата неправильна.';
+          return 'введена дата неправильна.';
         } else if (+numbers[1] <= 0 || +numbers[1] > 12) {
-          return 'Введений місяць неправильний.';
+          return 'введений місяць неправильний.';
         } else if (numbers[2] && !+numbers[2] && numbers.length !== 4) {
-          return 'Введений рік неправильний.';
+          return 'введений рік неправильний.';
         }
       } else {
-        return 'Потрібно ввести дату та місяць народження окремо.';
+        return 'потрібно ввести дату та місяць народження окремо.';
       }
     } else {
-      return 'Я не знайшов жодної дати.';
+      return 'я не знайшов жодної дати.';
     }
   },
 
@@ -83,9 +83,10 @@ const processMessage = {
       error = `${error} Cпробуй, будь ласка, ще раз :slight_smile:`;
       message.reply(error);
     } else {
-      userData.date = `${numbers[0]}.${numbers[1]}.${numbers[2] || ''}`;
+      userData.date = `${numbers[0]}.${numbers[1]}`;
+      userData.year = numbers[2];
       processMessage.updateUserData(userData).then(() => {
-        message.reply(`Я успішно зберіг твій день народження: ${numbers[0]}.${numbers[1]}${numbers[2] ? '.' + numbers[2] : ''} 
+        message.reply(`я успішно зберіг твій день народження: ${numbers[0]}.${numbers[1]}${numbers[2] ? '.' + numbers[2] : ''} 
 Якщо він неправильний, введи його ще раз у форматі: дд.мм або дд.мм.рррр`);
       });
     }
