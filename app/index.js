@@ -10,7 +10,6 @@ const app = express();
 dotenv.config();
 const client = new Discord.Client();
 
-
 const CronJob = cron.CronJob;
 
 const bdReminder = new cron.CronJob({
@@ -19,6 +18,13 @@ const bdReminder = new cron.CronJob({
   start: false,
   timeZone: 'Europe/Kiev'
 });
+
+// const adPhrase = cron.CronJob({
+//   cronTime: '00 * * * * *',
+//   onTick: birthday.popularisation,
+//   start: false,
+//   timeZone: 'Europe/Kiev'
+// });
 
 client.on('ready', () => {
   console.log('I am ready!', new Date());

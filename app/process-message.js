@@ -27,7 +27,7 @@ const processMessage = {
           return 'введена дата неправильна.';
         } else if (+numbers[1] <= 0 || +numbers[1] > 12) {
           return 'введений місяць неправильний.';
-        } else if (numbers[2] && !+numbers[2] && numbers.length !== 4) {
+        } else if (numbers[2] && (!+numbers[2] || +numbers[2].length < 1900 || +numbers[2] > (new Date).getFullYear())) {
           return 'введений рік неправильний.';
         }
       } else {
