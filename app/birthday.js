@@ -57,11 +57,13 @@ ${images[random(images.length)]} :wink:`;
           let guild = birthday._client.guilds.get(serverId);
           if (guild) {
             let channels = guild.channels;
-            let generalKey = channels.findKey('name', process.env.CHANNEL_GENERAL) || channels.firstKey();
+            let generalName = process.env.CHANNEL_GENERAL || 'general';
+            let generalKey = channels.findKey('name', generalName) || channels.firstKey();
             channels.get(generalKey).send(greeting);
 
             // post ad
-            let botCommandsKey = channels.findKey('name', process.env.CHANNEL_BOT_COMMANDS);
+            let botCommandName = process.env.CHANNEL_BOT_COMMANDS || 'bot_commands';
+            let botCommandsKey = channels.findKey('name', botCommandName);
             let botCommandsChannel = channels.get(botCommandsKey);
             if (botCommandsChannel) {
               botCommandsChannel.send(adPhrasesData.adPhrases[random(adPhrasesData.adPhrases.length)]);
