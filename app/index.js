@@ -19,13 +19,6 @@ const bdReminder = new cron.CronJob({
   timeZone: 'Europe/Kiev'
 });
 
-// const adPhrase = cron.CronJob({
-//   cronTime: '00 * * * * *',
-//   onTick: birthday.popularisation,
-//   start: false,
-//   timeZone: 'Europe/Kiev'
-// });
-
 client.on('ready', () => {
   console.log('I am ready!', new Date());
   birthday._client = client;

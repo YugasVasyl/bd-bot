@@ -51,22 +51,25 @@ const birthday = {
 
           let images = imagesData.images;
           let greeting = `Від імені всієї української геймер-спільноти урочисто вітаю з днем народження ${usersText}. 
-Бажаю ${to} набитого гаманця в Steam, відкриття всіх досягнень та купу приємних вражень від ігор!!!\n
+Бажаю ${to} набитого гаманця в Steam, потужного ПК (або консоль) та купу приємних вражень від ігор!!!\n
 ${images[random(images.length)]} :wink:`;
 
           let guild = birthday._client.guilds.get(serverId);
           if (guild) {
             let channels = guild.channels;
-            let generalKey = channels.findKey('name', 'general') || channels.firstKey();
+            let generalKey = channels.findKey('name', process.env.CHANNEL_GENERAL) || channels.firstKey();
             channels.get(generalKey).send(greeting);
+
+            // post ad
+            let botCommandsKey = channels.findKey('name', process.env.CHANNEL_BOT_COMMANDS);
+            let botCommandsChannel = channels.get(botCommandsKey);
+            if (botCommandsChannel) {
+              botCommandsChannel.send(adPhrasesData.adPhrases[random(adPhrasesData.adPhrases.length)]);
+            }
           }
         });
       });
     });
-  },
-
-  popularisation: () => {
-
   }
 };
 

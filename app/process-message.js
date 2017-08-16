@@ -22,12 +22,13 @@ const processMessage = {
 
   validateNumbers: (numbers) => {
     if (numbers) {
+      console.log('numbers', numbers);
       if (numbers.length >= 2) {
         if (+numbers[0] <= 0 || +numbers[0] > 31) {
           return 'введена дата неправильна.';
         } else if (+numbers[1] <= 0 || +numbers[1] > 12) {
           return 'введений місяць неправильний.';
-        } else if (numbers[2] && (!+numbers[2] || +numbers[2].length < 1900 || +numbers[2] > (new Date).getFullYear())) {
+        } else if (numbers[2] && (!+numbers[2] || +numbers[2] < 1900 || +numbers[2] > (new Date).getFullYear())) {
           return 'введений рік неправильний.';
         }
       } else {
@@ -54,29 +55,32 @@ const processMessage = {
 
   process: (message) => {
     message.content = message.content.toLowerCase();
-    if (!message.content.indexOf('!bdbot') || !message.content.indexOf('!bd-bot')) {
-      let help = ['hello', 'hi', 'привіт', 'help'];
-      let helpLength = help.length;
-      for (let i = 0; i < helpLength; i++) {
-        if (~message.content.indexOf(help[i])) {
-          return processMessage.showHelp(message);
-        }
+    let mess = message.content;
+    if (!mess.indexOf('!bdbot') || !mess.indexOf('!bd-bot') || !mess.indexOf(`<@${process.env.SELF_ID}>`)) {
+      let confusedPhrase = `Не напружуй мене просто так :confused:
+Спробуй писати слова окремо, або щось розумніше, наприклад \`!bdbot help\``;
+
+      let spaceIndex = mess.indexOf(' ');
+      if (~spaceIndex) {
+        mess = mess.substr(spaceIndex + 1);
+      } else {
+        return message.reply(confusedPhrase);
       }
-      if (message.content.length <= 8) {
-        return processMessage.showHelp(message);
+      if (parseInt(mess, 10)) {
+        return processMessage.addBirthday(message, mess);
       }
-      processMessage.addBirthday(message);
+      return processMessage.showHelp(message);
     }
   },
 
-  addBirthday: (message) => {
+  addBirthday: (message, mess) => {
     let userData = {
       user_id: message.author.id,
       username: message.author.username,
       server_ids: [message.channel.guild.id]
     };
 
-    let numbers = message.content.match(/\d+/g);
+    let numbers = mess.match(/\d+/g);
     numbers = processMessage.formatNumbers(numbers);
     let error = processMessage.validateNumbers(numbers);
     if (error) {
