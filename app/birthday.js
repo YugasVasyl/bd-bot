@@ -60,8 +60,21 @@ ${images[random(images.length)]} :wink:`;
             let generalName = process.env.CHANNEL_GENERAL || 'general';
             let generalKey = channels.findKey('name', generalName) || channels.firstKey();
             channels.get(generalKey).send(greeting);
+          }
+        });
+      });
+    });
 
-            // post ad
+    birthday.showAd();
+  },
+
+  showAd: () => {
+    mongoDB.connect().then(() => {
+      return mongoDB.getServers().then(servers => {
+        servers.forEach(server => {
+          let guild = birthday._client.guilds.get(server.id);
+          if (guild) {
+            let channels = guild.channels;
             let botCommandName = process.env.CHANNEL_BOT_COMMANDS || 'bot_commands';
             let botCommandsKey = channels.findKey('name', botCommandName);
             let botCommandsChannel = channels.get(botCommandsKey);
@@ -73,6 +86,7 @@ ${images[random(images.length)]} :wink:`;
       });
     });
   }
+
 };
 
 export default birthday;

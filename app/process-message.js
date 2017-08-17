@@ -22,7 +22,6 @@ const processMessage = {
 
   validateNumbers: (numbers) => {
     if (numbers) {
-      console.log('numbers', numbers);
       if (numbers.length >= 2) {
         if (+numbers[0] <= 0 || +numbers[0] > 31) {
           return 'введена дата неправильна.';
@@ -89,11 +88,26 @@ const processMessage = {
     } else {
       userData.date = `${numbers[0]}.${numbers[1]}`;
       userData.year = numbers[2];
+      processMessage.updateServers(message.channel.guild.id, message.channel.guild.name);
       processMessage.updateUserData(userData).then(() => {
         message.reply(`я успішно зберіг твій день народження: ${numbers[0]}.${numbers[1]}${numbers[2] ? '.' + numbers[2] : ''} 
 Якщо він неправильний, введи його ще раз у форматі: дд.мм або дд.мм.рррр`);
       });
     }
+  },
+
+  updateServers: (serverId, serverName) => {
+    return mongoDB.connect().then(() => {
+      return mongoDB.getServers().then(servers => {
+        let exist = servers.find(server => server.id === serverId);
+        if (!exist) {
+          return mongoDB.addServer({
+            id: serverId,
+            name: serverName
+          });
+        }
+      });
+    });
   },
 
   showHelp: (message) => {

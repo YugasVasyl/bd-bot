@@ -81,6 +81,40 @@ const mongoDB = {
         }
       });
     });
+  },
+
+  getServers: () => {
+    return new Promise((res, rej) => {
+      let collection = mongoDB._db.collection('servers');
+      collection.find({}).toArray((err, result) => {
+        if (err) {
+          console.error(`Error finding servers: ${err}`);
+          rej(err);
+        } else {
+          console.log('find servers:', result);
+          res(result);
+        }
+      });
+    });
+  },
+
+  addServer: (serverData) => {
+    return new Promise((res, rej) => {
+      let collection = mongoDB._db.collection('servers');
+      collection.insertOne(serverData, (err, result) => {
+        if (err) {
+          console.error(`Error adding new server information: ${serverData}, ${err}`);
+          rej(err);
+        } else {
+          console.log('Server information was added', result);
+          res(result);
+        }
+      });
+    });
+  },
+
+  close: () => {
+    mongoDB._db.close();
   }
 };
 
