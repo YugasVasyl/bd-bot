@@ -76,7 +76,7 @@ const mongoDB = {
           mongoDB._db.close();
           rej(err);
         } else {
-          console.log('find user:', result);
+          console.log('find users by Birthday:', result);
           res(result);
         }
       });

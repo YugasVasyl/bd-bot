@@ -11,7 +11,6 @@ function random(len) {
 
 const birthday = {
   cronTick: () => {
-    console.log('cron\'s tick was runned!!');
     mongoDB.connect().then(() => {
       let timezoneShift = -3;
       if (+process.env.TIMEZONE_SHIFT !== undefined) {
@@ -39,7 +38,7 @@ const birthday = {
             if (usersText.length) {
               usersText = `${usersText}, `;
             }
-            usersText = `<@${user.user_id}> `;
+            usersText = `${usersText}<@${user.user_id}>`;
             if (user.year) {
               usersText = ` ${usersText}(${year - user.year}р.)`;
             }
@@ -50,7 +49,7 @@ const birthday = {
           }
 
           let images = imagesData.images;
-          let greeting = `Від імені всієї української геймер-спільноти урочисто вітаю з днем народження ${usersText}. 
+          let greeting = `Від імені всієї української геймер-спільноти урочисто вітаю з днем народження ${usersText} . 
 Бажаю ${to} набитого гаманця в Steam, потужного ПК (або консоль) та купу приємних вражень від ігор!!!\n
 ${images[random(images.length)]} :wink:`;
 
