@@ -63,6 +63,8 @@ ${images[random(images.length)]} :wink:`;
         });
       });
     });
+
+    birthday.showAd();
   },
 
   showAd: () => {

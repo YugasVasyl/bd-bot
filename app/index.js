@@ -13,15 +13,8 @@ const client = new Discord.Client();
 const CronJob = cron.CronJob;
 
 const bdReminder = new cron.CronJob({
-  cronTime: '00 00 10 * * *',
-  onTick: birthday.cronTick,
-  start: false,
-  timeZone: 'Europe/Kiev'
-});
-
-const adReminder = new cron.CronJob({
   cronTime: '00 00 10 * * Mon',
-  onTick: birthday.showAd,
+  onTick: birthday.cronTick,
   start: false,
   timeZone: 'Europe/Kiev'
 });
@@ -30,7 +23,6 @@ client.on('ready', () => {
   console.log('I am ready!', new Date());
   birthday._client = client;
   bdReminder.start();
-  adReminder.start();
 });
 
 client.on('message', message => {
